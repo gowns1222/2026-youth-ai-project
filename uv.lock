@@ -2623,6 +2623,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "agent-framework" },
+    { name = "agent-framework-core", extra = ["all"] },
     { name = "beautifulsoup4" },
     { name = "chromadb" },
     { name = "gradio" },
@@ -2645,6 +2646,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "agent-framework", specifier = ">=1.2.0" },
+    { name = "agent-framework-core", extras = ["all"], specifier = ">=1.2.0" },
     { name = "beautifulsoup4" },
     { name = "chromadb", specifier = ">=0.5.0" },
     { name = "gradio", specifier = ">=4.0.0" },
