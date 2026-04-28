@@ -8,6 +8,16 @@ echo "📦 uv 설치 중..."
 curl -LsSf https://astral.sh/uv/install.sh | sh
 export PATH="$HOME/.local/bin:$PATH"
 
+# 새 터미널에서도 uv가 인식되도록 PATH를 셸 RC에 영구 등록
+for RC in "$HOME/.bashrc" "$HOME/.zshrc"; do
+    if [ -f "$RC" ] && ! grep -q '.local/bin' "$RC"; then
+        echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$RC"
+    fi
+done
+
+# 캐시/.venv가 서로 다른 파일시스템에 있을 때 하드링크 경고 방지
+export UV_LINK_MODE=copy
+
 # 2) uv sync (의존성 설치 + .venv 생성)
 echo "📦 패키지 설치 중..."
 uv sync
@@ -19,7 +29,7 @@ sudo apt-get update -qq && sudo apt-get install -y -qq fonts-nanum > /dev/null 2
 # 4) .env 파일 생성 (없을 경우)
 if [ ! -f .env ]; then
     cp .env.example .env
-    echo "⚠️  .env 파일이 생성되었습니다. APIM_SUBSCRIPTION_KEY를 설정해주세요!"
+    echo "⚠️  .env 파일이 생성되었습니다. APIM_BASE_URL과 APIM_KEY를 설정해주세요!"
 fi
 
 echo "✅ 환경 세팅 완료!"
